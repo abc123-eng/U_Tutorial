@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    Animator m_Animator;
+
     Vector3 m_Movement;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        m_Animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
