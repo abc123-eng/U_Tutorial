@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
 
     Rigidbody m_Rigidbody;
 
+    AudioSource m_AudioSource;
+
     //三维矢量，
     Vector3 m_Movement;
 
@@ -24,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody>();
+        m_AudioSource = GetComponent<AudioSource>();    
     }
 
     // Update is called once per frame
@@ -38,6 +41,20 @@ public class PlayerMovement : MonoBehaviour
         bool hasHorizontalInput = !Mathf.Approximately(horizontal, 0f);
         bool hasVerzontalInput = !Mathf.Approximately(vertical, 0f);
         bool isWalking = hasHorizontalInput || hasVerzontalInput;
+        //走路音频
+        if (isWalking)
+        {
+            if (!m_AudioSource.isPlaying)
+            {
+                m_AudioSource.Play();   
+            }
+
+        }
+        else
+        {
+            m_AudioSource.Stop();
+        }
+
         m_Animator.SetBool("IsWalking", isWalking);
         //准备四元素，RotateTowards（当前朝向，目标朝向，转速，受限角度）
         Vector3 desiredForward = Vector3.RotateTowards(transform.forward, m_Movement, turnSpeed * Time.deltaTime, 0f);
